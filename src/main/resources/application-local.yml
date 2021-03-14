@@ -1,0 +1,6 @@
+spring:
+    h2.console: true
+    path: '/console'
+  jpa:
+    hibernate:
+      ddl-auto: validate

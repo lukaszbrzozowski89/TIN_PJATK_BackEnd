@@ -1,0 +1,482 @@
+# create table user
+# (
+#     id           int unsigned PRIMARY KEY auto_increment,
+#     airport_name varchar(100) not null,
+#     code         varchar(3)   not null
+# );
+#
+# create Table plane
+# (
+#     id                    int unsigned PRIMARY KEY auto_increment,
+#     plane_name            varchar(20) not null,
+#     model                 varchar(20) not null,
+#     production_year       date        not null,
+#     seats                 int         not null,
+#     latest_tech_review    date        not null,
+#     next_tech_review_date date        null
+# );
+#
+# create table address
+# (
+#     id         int unsigned PRIMARY KEY auto_increment,
+#     city       varchar(20) not null,
+#     street     varchar(20) not null,
+#     postalCode varchar(10) not null
+# );
+#
+# create table person
+# (
+#     id          int unsigned PRIMARY KEY auto_increment,
+#     person_name varchar(20) not null,
+#     surname     varchar(20) not null,
+#     birth_date  date        not null,
+#     address_id  int
+#
+# );
+#
+# create table languages
+# (
+#     id            int unsigned PRIMARY KEY auto_increment,
+#     language_name varchar(3)
+# );
+#
+# create table steward
+# (
+#     evidence_id        varchar(20)     not null,
+#     person_id          int PRIMARY KEY not null,
+#     language_id        int             not null,
+#     second_language_id int             not null
+#
+# );
+#
+#
+# create table license
+# (
+#     id           int unsigned PRIMARY KEY auto_increment,
+#     license_name varchar(10) not null,
+#     plane        int         not null
+# );
+#
+# create table pilot
+# (
+#     license_id        varchar(20)     not null,
+#     person_id         int PRIMARY KEY not null,
+#     licence_id        int             not null,
+#     second_license_id int             not null,
+#     exam_validity     date            not null
+#
+# );
+#
+# create table passenger
+# (
+#     person_id    int         not null,
+#     email        varchar(50) not null,
+#     phone_number varchar(20) not null
+#
+# );
+#
+# create table lugagge_type
+# (
+#     id   int unsigned PRIMARY KEY auto_increment,
+#     type varchar(10)
+# );
+#
+# create table luggage
+# (
+#     id      int unsigned PRIMARY KEY auto_increment,
+#     type_id int not null
+# );
+#
+# create table flight_type
+# (
+#     id        int unsigned PRIMARY KEY auto_increment,
+#     type_name varchar(10)
+# );
+#
+# create table reservation
+# (
+#     id              int unsigned PRIMARY KEY auto_increment,
+#     flight_number   varchar(10) not null,
+#     airport_to_id   int         not null,
+#     airport_from_id int         not null,
+#     flight_type     int         not null,
+#     flight_schedule int         not null
+#
+# );
+#
+# create table class_type
+# (
+#     id        int unsigned PRIMARY KEY auto_increment,
+#     type_name varchar(20)
+# );
+#
+# create table reservation_status
+# (
+#     id        int unsigned PRIMARY KEY auto_increment,
+#     type_name varchar(20)
+# );
+#
+# create table reservation
+# (
+#     id                    int unsigned PRIMARY KEY auto_increment,
+#     seat_number           int not null,
+#     class_id              int not null,
+#     reservation_status_id int not null,
+#     payment_wait_time     int not null,
+#     flight_instance_id    int not null
+# );
+#
+# create table payment_method
+# (
+#     id          int unsigned PRIMARY KEY auto_increment,
+#     method_name varchar(20) not null
+# );
+#
+# create table payment_status
+# (
+#     id          int unsigned PRIMARY KEY auto_increment,
+#     status_name varchar(20) not null
+# );
+#
+# create table payment
+# (
+#     id                int unsigned PRIMARY KEY auto_increment,
+#     payment_status_id int    not null,
+#     payment_method_id int    not null,
+#     amount            bigint not null
+# );
+#
+# create table flight_status
+# (
+#     id          int unsigned PRIMARY KEY auto_increment,
+#     status_name varchar(20)
+# );
+#
+# create table flight_instance
+# (
+#     flight_id        int  not null,
+#     flight_status_id int  not null,
+#     startTime        time not null
+# );
+#
+# create table weekly_schedule
+# (
+#     id          int unsigned PRIMARY KEY auto_increment,
+#     day_of_week int not null
+# );
+#
+# create table flight_schedule
+# (
+#     id                 int unsigned PRIMARY KEY auto_increment,
+#     weekly_schedule_id int not null
+#
+# );
+#
+# alter table reservation
+#     add foreign key (flight_schedule) references flight_schedule (id);
+# alter table flight_schedule
+#     add foreign key (weekly_schedule_id) references weekly_schedule (id);
+# alter table reservation
+#     add foreign key (flight_type) references flight_type (id);
+# alter table flight_instance
+#     add foreign key (flight_id) references reservation (id);
+# alter table flight_instance
+#     add foreign key (flight_status_id) references flight_status (id);
+# alter table person
+#     add foreign key (address_id) references Address (id);
+#
+# alter table steward
+#     add foreign key (language_id) references languages (id);
+#
+# alter table steward
+#     add foreign key (person_id) references person (id);
+#
+# alter table pilot
+#     add foreign key (person_id) references person (id);
+#
+# alter table pilot
+#     add foreign key (licence_id) references license (id);
+#
+# alter table pilot
+#     add foreign key (second_license_id) references license (id);
+#
+# alter table passenger
+#     add foreign key (person_id) references person (id);
+#
+# alter table luggage
+#     add foreign key (type_id) references lugagge_type (id);
+#
+# alter table reservation
+#     add foreign key (airport_from_id) references user (id);
+#
+# alter table reservation
+#     add foreign key (airport_to_id) references user (id);
+#
+# alter table reservation
+#     add foreign key (class_id) references class_type (id);
+# alter table reservation
+#     add foreign key (reservation_status_id) references reservation_status (id);
+# alter table reservation
+#     add foreign key (flight_instance_id) references flight_instance (flight_id);
+#
+# alter table payment
+#     add foreign key (payment_method_id) references payment_method (id);
+#
+# alter table payment
+#     add foreign key (payment_status_id) references payment_status (id);
+#
+# alter table license
+#     add foreign key (plane) references plane (id);
+#
+#
+#
+# insert into user(airport_name, code)
+# values ('Warsaw', 'WAW');
+# insert into user(airport_name, code)
+# values ('London City', 'LCY');
+# insert into user(airport_name, code)
+# values ('Paris Charles De Gaulle', 'CDG');
+# insert into user(airport_name, code)
+# values ('Chicago OHare', 'ORD');
+# insert into user(airport_name, code)
+# values ('Barcelona', 'BCN');
+# insert into user(airport_name, code)
+# values ('Amsterdam', 'AMS');
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Airbus', 'A320', DATE '2010-12-13', 160, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Airbus', 'A220', DATE '2011-01-17', 109, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Airbus', 'A319', DATE '2009-09-11', 132, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Airbus', 'A350', DATE '2007-08-08', 306, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Boeing', '737', DATE '2018-10-16', 160, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Boeing', '777', DATE '2019-11-30', 288, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Boeing', '757', DATE '2018-02-27', 234, CURRENT_DATE);
+#
+# insert into plane(plane_name, model, production_year, seats, latest_tech_review)
+# values ('Bombardier', 'CRJ-900', DATE '2010-10-04', 76, CURRENT_DATE);
+#
+# insert into languages(language_name)
+# values ('PL');
+# insert into languages(language_name)
+# values ('EN');
+# insert into languages(language_name)
+# values ('DE');
+# insert into languages(language_name)
+# values ('FR');
+# insert into languages(language_name)
+# values ('ES');
+# insert into languages(language_name)
+# values ('CHN');
+#
+# insert into address(city, street, postalCode)
+# values ('Warsaw', 'Krucza 21', '00-120');
+# insert into address(city, street, postalCode)
+# values ('Warsaw', 'Piękna 20', '00-121');
+# insert into address(city, street, postalCode)
+# values ('Warsaw', 'Koszykowa 45', '01-320');
+#
+#
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Anna', 'Kowalska', DATE '1977-10-12', 1);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Katarzyna', 'Nowak', DATE '1978-05-20', 2);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Krzysztof', 'Jerzyna', DATE '1979-07-07', 3);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Jarosław', 'Psikuta', DATE '1987-05-15', 1);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Adam', 'Dudek', DATE '1966-01-11', 2);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Roman', 'Kosowski', DATE '1956-12-13', 3);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Adam', 'Lewandowski', DATE '1925-11-13', 1);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Piotr', 'Gruszka', DATE '1989-12-11', 2);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Paweł', 'Grzywacz', DATE '1999-08-16', 3);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Adam', 'Janusz', DATE '1979-09-05', 1);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Jan', 'Nos', DATE '1964-11-15', 2);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Janusz', 'Nosacz', DATE '1966-12-11', 1);
+# insert into person(person_name, surname, birth_date, address_id)
+# values ('Janina', 'Nosak', DATE '1969-08-15', 3);
+#
+# insert into steward(evidence_id, person_id, language_id, second_language_id)
+# values ('9785456', 1, 1, 2);
+# insert into steward(evidence_id, person_id, language_id, second_language_id)
+# values ('4986545', 2, 2, 3);
+# insert into steward(evidence_id, person_id, language_id, second_language_id)
+# values ('1657451', 3, 1, 4);
+# insert into steward(evidence_id, person_id, language_id, second_language_id)
+# values ('6157456', 4, 4, 1);
+#
+# insert into license(license_name, plane)
+# values ('1', 1);
+# insert into license(license_name, plane)
+# values ('2', 2);
+# insert into license(license_name, plane)
+# values ('3', 3);
+# insert into license(license_name, plane)
+# values ('4', 4);
+# insert into license(license_name, plane)
+# values ('5', 5);
+# insert into license(license_name, plane)
+# values ('6', 6);
+# insert into license(license_name, plane)
+# values ('6', 7);
+# insert into license(license_name, plane)
+# values ('6', 8);
+#
+# insert into pilot(license_id, person_id, licence_id, second_license_id, exam_validity)
+# values ('681353', 5, 1, 2, DATE '2022-01-01');
+# insert into pilot(license_id, person_id, licence_id, second_license_id, exam_validity)
+# values ('786453', 6, 3, 4, DATE '2022-01-01');
+# insert into pilot(license_id, person_id, licence_id, second_license_id, exam_validity)
+# values ('987645', 7, 5, 6, DATE '2022-01-01');
+# insert into pilot(license_id, person_id, licence_id, second_license_id, exam_validity)
+# values ('132458', 8, 7, 8, DATE '2022-01-01');
+#
+# insert into passenger(person_id, email, phone_number)
+# values (9, 'email@email.com', '123456789');
+# insert into passenger(person_id, email, phone_number)
+# values (10, 'email@email.com', '123456789');
+# insert into passenger(person_id, email, phone_number)
+# values (11, 'email@email.com', '123456789');
+# insert into passenger(person_id, email, phone_number)
+# values (12, 'email@email.com', '123456789');
+#
+# insert into lugagge_type(type)
+# values ('Hand');
+# insert into lugagge_type(type)
+# values ('Checked');
+#
+# insert into flight_type(type_name)
+# values ('Long Haul');
+# insert into flight_type(type_name)
+# values ('Short Haul');
+# insert into flight_type(type_name)
+# values ('Charter');
+# insert into flight_type(type_name)
+# values ('Rented');
+#
+# insert into weekly_schedule(day_of_week)
+# VALUES (1);
+# insert into weekly_schedule(day_of_week)
+# VALUES (2);
+# insert into weekly_schedule(day_of_week)
+# VALUES (3);
+# insert into weekly_schedule(day_of_week)
+# VALUES (4);
+# insert into weekly_schedule(day_of_week)
+# VALUES (5);
+# insert into weekly_schedule(day_of_week)
+# VALUES (6);
+# insert into weekly_schedule(day_of_week)
+# VALUES (7);
+#
+#
+#
+# insert into flight_schedule(weekly_schedule_id)
+# values (1);
+# insert into flight_schedule(weekly_schedule_id)
+# values (2);
+# insert into flight_schedule(weekly_schedule_id)
+# values (3);
+# insert into flight_schedule(weekly_schedule_id)
+# values (4);
+# insert into flight_schedule(weekly_schedule_id)
+# values (5);
+# insert into flight_schedule(weekly_schedule_id)
+# values (6);
+# insert into flight_schedule(weekly_schedule_id)
+# values (7);
+#
+# insert into flight_status(status_name)
+# values ('Added');
+# insert into flight_status(status_name)
+# values ('Cancelled');
+# insert into flight_status(status_name)
+# values ('Boarding');
+# insert into flight_status(status_name)
+# values ('Ready To Take Off');
+# insert into flight_status(status_name)
+# values ('During Flight');
+# insert into flight_status(status_name)
+# values ('Finished');
+#
+#
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO331', 1, 3, 2, 1);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO332', 3, 1, 2, 2);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO437', 1, 5, 2, 2);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO438', 5, 1, 2, 3);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO001', 1, 4, 1, 4);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO002', 4, 1, 1, 5);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO287', 1, 2, 2, 2);
+# insert into reservation(flight_number, airport_to_id, airport_from_id, flight_type, flight_schedule)
+# VALUES ('LO288', 2, 1, 2, 3);
+#
+# insert into class_type(type_name)
+# values ('Business');
+# insert into class_type(type_name)
+# values ('Premium');
+# insert into class_type(type_name)
+# values ('Economy');
+#
+# insert into flight_instance(flight_id, flight_status_id, startTime)
+# values (1, 1, '12:00');
+# insert into flight_instance(flight_id, flight_status_id, startTime)
+# values (2, 1, '14:00');
+#
+# insert into flight_instance(flight_id, flight_status_id, startTime)
+# values (3, 1, '16:00');
+# insert into flight_instance(flight_id, flight_status_id, startTime)
+# values (4, 1, '18:00');
+#
+# insert into reservation_status(type_name)
+# values ('Started');
+# insert into reservation_status(type_name)
+# values ('Waiting for payment');
+# insert into reservation_status(type_name)
+# values ('Paid');
+# insert into reservation_status(type_name)
+# values ('Finished');
+# insert into reservation_status(type_name)
+# values ('Cancelled');
+#
+#
+# insert into reservation(seat_number, class_id, reservation_status_id, payment_wait_time, flight_instance_id)
+# values (21, 1, 1, 60, 1);
+#
+# insert into reservation(seat_number, class_id, reservation_status_id, payment_wait_time, flight_instance_id)
+# values (22, 2, 1, 60, 1);
+#
+# insert into reservation(seat_number, class_id, reservation_status_id, payment_wait_time, flight_instance_id)
+# values (23, 3, 1, 60, 1);
+#
+# insert into reservation(seat_number, class_id, reservation_status_id, payment_wait_time, flight_instance_id)
+# values (24, 2, 1, 60, 1);
+#
+# insert into reservation(seat_number, class_id, reservation_status_id, payment_wait_time, flight_instance_id)
+# values (25, 1, 1, 60, 1);
+#

@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "spring.h2.console",
+      "type": "java.lang.String",
+      "description": "Description for spring.h2.console."
+    },
+    {
+      "name": "spring.path",
+      "type": "java.lang.String",
+      "description": "Description for spring.path."
+    },
+    {
+      "name": "jpa.hibernate.ddl-auto",
+      "type": "java.lang.String",
+      "description": "Description for jpa.hibernate.ddl-auto."
+    }
+  ] }
